@@ -4,7 +4,7 @@ use task_tracker::*;
 use std::env;
 
 fn main() {
-    let args: Vec<String> =env::args().skip(1).collect();
+    let args: Vec<String> = env::args().skip(1).collect();
     //TODO accept input as the numbers assigned
     //TODO accept multiple parameters later
     match args.get(0) {
