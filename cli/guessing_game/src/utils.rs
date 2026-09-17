@@ -4,11 +4,11 @@ use crate::score::*;
 pub fn greet_user() {
     println!("\nWelcome to the Number Guessing Game!");
     println!("I'm thinking of a number between 1 and 100.");
-    println!("You have a number of chances to guess the correct number.\n");
+    println!("You have a number of chances to guess the correct number.");
 }
 
 pub fn get_chance() -> u32 {
-    println!("Please select the difficulty level:");
+    println!("\nPlease select the difficulty level:");
     println!("1. Easy (10 chances)");
     println!("2. Medium (5 chances)");
     println!("3. Hard (3 chances)");
@@ -65,4 +65,22 @@ pub fn process_game(chances: u32, random_number: u32, input: &mut String, score:
         }
     }
     println!("You Lost! the random number was {random_number}");
+    score.print_scores();
+}
+
+pub fn retry() -> bool {
+    let mut input = String::new();
+    println!("\nWould you like to try again?");
+    println!("1. Yes");
+    println!("2. No");
+    print!("Enter your choice: ");
+    io::stdout().flush().unwrap();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("An error occured while getting response");
+    match input.trim() {
+        "Yes" | "yes" | "1" => true,
+        "No" | "no" | "2" => false,
+        _ => panic!("Wrong input"),
+    }
 }

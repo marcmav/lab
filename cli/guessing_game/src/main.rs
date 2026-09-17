@@ -3,15 +3,18 @@ mod utils;
 
 use rand::Rng;
 use score::*;
-use std::io::{self, Write};
 use utils::*;
 
 fn main() {
     greet_user();
-    let chances = get_chance();
-    println!("Let's start the game!\n");
-    let random_number: u32 = rand::thread_rng().gen_range(1..=100);
     let mut score = Score::new();
     let mut input = String::new();
-    process_game(chances, random_number, &mut input, &mut score);
+    let mut repeat = true;
+    while repeat {
+        let chances = get_chance();
+        println!("Let's start the game!\n");
+        let random_number: u32 = rand::thread_rng().gen_range(1..=100);
+        process_game(chances, random_number, &mut input, &mut score);
+        repeat = retry();
+    }
 }
