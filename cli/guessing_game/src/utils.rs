@@ -42,14 +42,32 @@ pub fn get_user_input(buf: &mut String) -> u32 {
     io::stdin()
         .read_line(buf)
         .expect("An error occured while getting the guess");
-    buf.trim().parse::<u32>().expect("Not a valid number")
+    match buf.trim() {
+        "Hint" | "hint" | "h" => return 101,
+        other => match other.parse::<u32>() {
+            Ok(i) => { if i <= 100 { return i; }
+                else { panic!("Enter a number between 0 and 100"); }
+            },
+            _ => panic!("Wrong input"),
+        }
+    }
 }
 
+#[allow(unused)]
 pub fn process_game(chances: u32, random_number: u32, input: &mut String, score: &mut Score) {
-    for i in 1..=chances {
+    let hint: String = match random_number {
+        even if even % 2 == 0 => String::from("\nThe random number is an even number"),
+        _ => String::from("\nThe random number is an odd number"),
+    };
+    let mut i = 1;
+    while i <= chances {
         print!("Enter your guess: ");
         io::stdout().flush().unwrap();
         let guess = get_user_input(input);
+        if guess == 101 {
+            println!("{hint}");
+            continue;
+        }
         if guess == random_number {
             println!(
                 "Congratulations! You guessed the correct number in {} attempts\n",
@@ -63,6 +81,7 @@ pub fn process_game(chances: u32, random_number: u32, input: &mut String, score:
         } else if guess < random_number {
             println!("Incorrect! The number is greater than {}\n", guess);
         }
+        i += 1;
     }
     println!("You Lost! the random number was {random_number}");
     score.print_scores();
