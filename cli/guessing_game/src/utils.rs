@@ -20,13 +20,18 @@ pub fn get_chance() -> u32 {
     match input.trim() {
         "1" | "Easy" => {
             println!("\nGreat! You have selected the Easy difficulty level.");
-            return 10; },
+            return 10;
+        }
         "2" | "Medium" => {
             println!("\nGreat! You have selected the Medium difficulty level.");
-            return 5; },
+            return 5;
+        }
         "3" | "Hard" => {
             println!("\nGreat! You have selected the Hard difficulty level.");
-            return 3; },
-        _ => { panic!("Wrong input"); },
+            return 3;
+        }
+        _ => {
+            panic!("Wrong input");
+        }
     };
 }

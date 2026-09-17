@@ -5,7 +5,6 @@ pub struct Score {
 }
 
 impl Score {
-
     pub fn new() -> Self {
         Score {
             easy: 0,
@@ -24,14 +23,20 @@ impl Score {
     pub fn update_score(&mut self, chances: u32, chances_used: u32) {
         match chances {
             10 => {
-                if self.easy > chances_used || self.easy == 0 { self.easy = chances_used; }
-            },
+                if self.easy > chances_used || self.easy == 0 {
+                    self.easy = chances_used;
+                }
+            }
             5 => {
-                if self.medium > chances_used || self.medium == 0 { self.medium = chances_used; }
-            },
+                if self.medium > chances_used || self.medium == 0 {
+                    self.medium = chances_used;
+                }
+            }
             3 => {
-                if self.hard > chances_used || self.hard == 0 { self.hard = chances_used; }
-            },
+                if self.hard > chances_used || self.hard == 0 {
+                    self.hard = chances_used;
+                }
+            }
             _ => (),
         }
     }

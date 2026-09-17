@@ -1,10 +1,10 @@
-mod utils;
 mod score;
+mod utils;
 
-use utils::*;
+use rand::Rng;
 use score::*;
 use std::io::{self, Write};
-use rand::Rng;
+use utils::*;
 
 fn main() {
     greet_user();
@@ -16,10 +16,15 @@ fn main() {
         print!("Enter your guess: ");
         io::stdout().flush().unwrap();
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("An error occured while getting the guess");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("An error occured while getting the guess");
         let guess: u32 = input.trim().parse().expect("Not a valid number");
         if guess == random_number {
-            println!("Congratulations! You guessed the correct number in {} attempts\n", i);
+            println!(
+                "Congratulations! You guessed the correct number in {} attempts\n",
+                i
+            );
             score.update_score(chances, i);
             score.print_scores();
             return;
