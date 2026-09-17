@@ -1,4 +1,5 @@
 use std::io::{self, Write};
+use crate::score::*;
 
 pub fn greet_user() {
     println!("\nWelcome to the Number Guessing Game!");
@@ -34,4 +35,34 @@ pub fn get_chance() -> u32 {
             panic!("Wrong input");
         }
     };
+}
+
+pub fn get_user_input(buf: &mut String) -> u32 {
+    buf.clear();
+    io::stdin()
+        .read_line(buf)
+        .expect("An error occured while getting the guess");
+    buf.trim().parse::<u32>().expect("Not a valid number")
+}
+
+pub fn process_game(chances: u32, random_number: u32, input: &mut String, score: &mut Score) {
+    for i in 1..=chances {
+        print!("Enter your guess: ");
+        io::stdout().flush().unwrap();
+        let guess = get_user_input(input);
+        if guess == random_number {
+            println!(
+                "Congratulations! You guessed the correct number in {} attempts\n",
+                i
+            );
+            score.update_score(chances, i);
+            score.print_scores();
+            return;
+        } else if guess > random_number {
+            println!("Incorrect! The number is less than {}\n", guess);
+        } else if guess < random_number {
+            println!("Incorrect! The number is greater than {}\n", guess);
+        }
+    }
+    println!("You Lost! the random number was {random_number}");
 }
