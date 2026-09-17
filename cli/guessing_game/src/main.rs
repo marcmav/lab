@@ -1,12 +1,12 @@
-mod greet;
+mod utils;
 
+use utils::*;
 use std::io;
 use rand::Rng;
 
 fn main() {
-    greet::greet_user();
-    let difficulty_level = greet::select_difficulty();
-    let mut attempt = match difficulty_level.trim() {
+    greet_user();
+    let mut attempt = match select_difficulty().trim() {
         "1" | "easy" => {
             println!("You chose easy difficulty");
             20 },
@@ -16,22 +16,28 @@ fn main() {
         "3" | "hard" => {
             println!("You chose hard difficulty");
             5 },
-        "4" | "quit" => {
+        "4" | "impossible" => {
+            println!("You chose impossible difficulty");
+            1 },
+        "5" | "quit" => {
             println!("Bye bye");
             return; },
         _ => 0,
     };
     println!("You have {} attempt/s to get it right", attempt);
-    println!("Choose a number: ");
-    let mut guess: u32;
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("An error occured while getting the guess");
+    println!("Choose a number (between 1 and 100): ");
     let random_number: u32 = rand::thread_rng().gen_range(1..=100);
     while attempt > 0 {
-        guess = input.trim().parse().expect("Not a valid number");
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).expect("An error occured while getting the guess");
+        let guess: u32 = input.trim().parse().expect("Not a valid number");
         if guess == random_number {
             println!("You guessed it right, congratulations!");
             return;
+        } else if guess > random_number {
+            println!("You guessed to high");
+        } else if guess < random_number {
+            println!("You guessed to low");
         }
         attempt -= 1;
     }
