@@ -1,5 +1,5 @@
-use std::io::{self, Write};
 use crate::score::*;
+use std::io::{self, Write};
 
 pub fn greet_user() {
     println!("\nWelcome to the Number Guessing Game!");
