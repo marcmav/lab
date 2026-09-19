@@ -1,29 +1,19 @@
-#![allow(unused_variables)] //cant go in production;
-
-use task_tracker::*;
 use std::env;
-use std::fs::File();
-use std::io::{self, Read, Write, BufReader, BufWriter};
+use task_tracker::*;
+use utils::*;
 
-fn main() -> Result<String, io::Error> {
-    let f = File::open("TODO")?;
-    let args: Vec<String> = env::args().skip(1).collect();
-    //TODO accept input as the numbers assigned
-    //TODO accept multiple parameters later
+fn main() {
+    let mut args: Vec<String> = env::args().skip(1).collect();
     match args.get(0) {
-        Some(s) => match s.as_str() {
-            "--init" => { init_task_tracker(); },
-            /*
-            "--add" => //call add function,
-            "--update" => //call update function,
-            "--delete" => //call delete function,
-            */
-            _ => {
-                println!("Invalid Input!");
-                println!("Program expects either: '<--init>, <--add>, <--update>, <--delete>'");
-                return;
-            },
+        Some(arg) => match arg.to_str() {
+            "add" => add_task(),
+            "update" => update_task(),
+            "delete" => delete_task(),
+            "list" => list_task(),
+            "mark-in-progress" => mark_in_progress(),
+            "mark-done" => mark_done(),
+            _ => return, //throw a proper error
         },
-        None => init_task_tracker(),
+        None => synopsis(), //throw a proper error
     }
 }

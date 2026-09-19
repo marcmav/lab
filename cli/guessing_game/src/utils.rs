@@ -81,7 +81,7 @@ pub fn process_game(chances: u32, random_number: u32, input: &mut String, score:
         } else if guess < random_number {
             println!("Incorrect! The number is greater than {}\n", guess);
         }
-        i += 1;
+       i += 1;
     }
     println!("You Lost! the random number was {random_number}");
     score.print_scores();
