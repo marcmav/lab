@@ -1,9 +1,22 @@
-pub fn add(args: Vec<String>) -> Result<Value>{
-    if args.len() != 2 {
-        return io::Error;
+use super::Task;
+
+pub fn add(args: Vec<String>, mut tasks: &Vec<Task>) {
+    if args.len() > 2 {
+        panic!("Error: extra arguments for add command");
     }
 
-    println!("Task added succesfully (ID: {})", id); //must define id
+    let mut id: u32 = 0;
+    match args.get(1) {
+        Some(&arg) => {
+            for (i, &task) in tasks.iter().enumerate() {
+                id = i.try_into().unwrap();
+            }
+            tasks.push(Task::new(id, arg));
+        }
+        None => panic!("You need to add a description for the task"),
+    }
+
+    println!("Task added succesfully (ID: {id})");
 }
 
 pub fn synopsis() {
