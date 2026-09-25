@@ -1,17 +1,17 @@
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize)]
-enum Status {
+pub enum Status {
     Todo,
     InProgress,
     Done,
 }
 
-#[derive(Serialize, Deserialize, Copy)]
-struct Task {
+#[derive(Serialize, Deserialize)]
+pub struct Task {
     id: u32,
-    description: String,
-    status: Status,
+    pub description: String,
+    pub status: Status,
     created_at: [u8; 3],
     updated_at: [u8; 3],
 }

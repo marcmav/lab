@@ -1,17 +1,17 @@
 use super::Task;
 
-pub fn add(args: Vec<String>, mut tasks: &Vec<Task>) {
+pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
         panic!("Error: extra arguments for add command");
     }
 
     let mut id: u32 = 0;
     match args.get(1) {
-        Some(&arg) => {
-            for (i, &task) in tasks.iter().enumerate() {
-                id = i.try_into().unwrap();
+        Some(arg) => {
+            for (i, _) in tasks.iter().enumerate() {
+                id = i.try_into().expect("Error: reached maximum number of ids");
             }
-            tasks.push(Task::new(id, arg));
+            tasks.push(Task::new(id, arg.to_string()));
         }
         None => panic!("You need to add a description for the task"),
     }
