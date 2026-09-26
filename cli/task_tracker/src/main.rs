@@ -10,10 +10,10 @@ fn main() {
     match args.get(0) {
         Some(arg) => match arg.as_str() {
             "add" => add(args, &mut tasks),
+            "list" => list(args, &tasks),
+            "update" => update(args, &mut tasks),
             /*
-            "update" => update_task(),
             "delete" => delete_task(),
-            "list" => list_task(),
             "mark-in-progress" => mark_in_progress(),
             "mark-done" => mark_done(),
             */

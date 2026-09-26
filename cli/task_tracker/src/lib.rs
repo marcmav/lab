@@ -1,5 +1,7 @@
 use serde::{Serialize, Deserialize};
 
+pub mod utils;
+
 #[derive(Serialize, Deserialize)]
 pub enum Status {
     Todo,
@@ -27,6 +29,13 @@ impl Task {
             updated_at: [0; 3],
         }
     }
-}
 
-pub mod utils;
+    pub fn display(&self) {
+        // TODO must display all other attributes
+        println!("{}:\n {}\n", self.id, self.description)
+    }
+
+    pub fn update_description(&mut self, new_description: String) {
+        self.description = new_description;
+    }
+}
