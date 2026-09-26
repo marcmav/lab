@@ -2,7 +2,7 @@ use serde::{Serialize, Deserialize};
 
 pub mod utils;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq)]
 pub enum Status {
     Todo,
     InProgress,
@@ -20,11 +20,11 @@ pub struct Task {
 
 impl Task {
     /*need to add created and updated at*/
-    pub fn new(id: u32, description: String) -> Task {
-        Task {
+    pub fn new(id: u32, description: String, status: Status) -> Self {
+        Self {
             id,
             description,
-            status: Status::Todo,
+            status,
             created_at: [0; 3],
             updated_at: [0; 3],
         }
@@ -37,5 +37,13 @@ impl Task {
 
     pub fn update_description(&mut self, new_description: String) {
         self.description = new_description;
+    }
+
+    pub fn filter_display(tasks: &Vec<Self>, status: Status) {
+        for task in tasks.iter() {
+            if task.status == status {
+                task.display();
+            }
+        }
     }
 }

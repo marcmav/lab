@@ -1,17 +1,18 @@
 use super::Task;
+use super::Status;
 
 pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
-        panic!("Error: extra arguments for add command");
+        panic!("Error: Extra arguments for add command");
     }
 
     let mut id: u32 = 0;
     match args.get(1) {
         Some(arg) => {
             for (i, _) in tasks.iter().enumerate() {
-                id = i.try_into().expect("Error: reached maximum number of IDs");
+                id = i.try_into().expect("Error: Reached maximum number of IDs");
             }
-            tasks.push(Task::new(id, arg.to_string()));
+            tasks.push(Task::new(id, arg.to_string(), Status::Todo));
         }
         None => panic!("Error: You need to add a description for the task"),
     }
@@ -21,7 +22,14 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
 
 pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
     match args.get(1) {
-        Some(arg) => (), // TODO deal status
+        Some(arg) => {
+            match arg.as_str() {
+                "todo" => Task::filter_display(tasks, Status::Todo),
+                "in-progress" => Task::filter_display(tasks, Status::InProgress),
+                "done" => Task::filter_display(tasks, Status::Done),
+                _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
+            }
+        }
         None => {
             for task in tasks.iter() {
                 task.display();
@@ -32,7 +40,7 @@ pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
 
 pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 3 {
-        panic!("Error: extra arguments for update command");
+        panic!("Error: Extra arguments for update command");
     }
     let id: u32;
     match args.get(1) {
