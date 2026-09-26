@@ -20,24 +20,6 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     println!("Task added succesfully (ID: {id})");
 }
 
-pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
-    match args.get(1) {
-        Some(arg) => {
-            match arg.as_str() {
-                "todo" => Task::filter_display(tasks, Status::Todo),
-                "in-progress" => Task::filter_display(tasks, Status::InProgress),
-                "done" => Task::filter_display(tasks, Status::Done),
-                _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
-            }
-        }
-        None => {
-            for task in tasks.iter() {
-                task.display();
-            }
-        },
-    }
-}
-
 pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 3 {
         panic!("Error: Extra arguments for update command");
@@ -46,7 +28,7 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     match args.get(1) {
         Some(arg) => match arg.parse() {
             Ok(n) => id = n,
-            Err(_) => panic!("Error: the ID must be a number"),
+            Err(_) => panic!("Error: The ID must be a number"),
         },
         None => panic!("Error: You need to add the ID of the task"),
     }
@@ -65,6 +47,51 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
             }
         },
         None => panic!("Error: You need to add a new description of the task"),
+    }
+}
+
+pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
+    if args.len() > 2 {
+        panic!("Error: Extra arguments for delete commands");
+    }
+    let mut idx: usize = 0;
+    match args.get(1) {
+        Some(arg) => match arg.parse::<u32>() {
+            Ok(n) => {
+                let mut indexed: bool = false;
+                for (i, task) in tasks.iter().enumerate() {
+                    if task.id == n {
+                        idx = i;
+                        indexed = true;
+                        break;
+                    }
+                }
+                if !indexed {
+                    panic!("Error: Unknown iD")
+                }
+            },
+            Err(_) => panic!("Error: Error: The ID must be a number"),
+        }
+        None => panic!("Error: You need to a add the ID of the task to delete"),
+    }
+    tasks.remove(idx);
+}
+
+pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
+    match args.get(1) {
+        Some(arg) => {
+            match arg.as_str() {
+                "todo" => Task::filter_display(tasks, Status::Todo),
+                "in-progress" => Task::filter_display(tasks, Status::InProgress),
+                "done" => Task::filter_display(tasks, Status::Done),
+                _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
+            }
+        }
+        None => {
+            for task in tasks.iter() {
+                task.display();
+            }
+        },
     }
 }
 
