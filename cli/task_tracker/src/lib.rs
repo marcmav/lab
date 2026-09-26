@@ -45,4 +45,14 @@ impl Task {
             }
         }
     }
+
+    pub fn get_id(args: &Vec<String>) -> u32 {
+        match args.get(1) {
+            Some(arg) => match arg.parse::<u32>() {
+                Ok(n) => return n,
+                Err(_) => panic!("Error: The ID must be a number"),
+            },
+            None => panic!("Error: You need to add the ID of the task"),
+        }
+    }
 }

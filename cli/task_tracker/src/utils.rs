@@ -10,9 +10,9 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     match args.get(1) {
         Some(arg) => {
             for (i, _) in tasks.iter().enumerate() {
-                id = i.try_into().expect("Error: Reached maximum number of IDs");
+                id = i as u32;
             }
-            tasks.push(Task::new(id, arg.to_string(), Status::Todo));
+            tasks.push(Task::new(id + 1, arg.to_string(), Status::Todo));
         }
         None => panic!("Error: You need to add a description for the task"),
     }
@@ -25,14 +25,7 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
         panic!("Error: Extra arguments for update command");
     }
 
-    let id: u32;
-    match args.get(1) {
-        Some(arg) => match arg.parse() {
-            Ok(n) => id = n,
-            Err(_) => panic!("Error: The ID must be a number"),
-        },
-        None => panic!("Error: You need to add the ID of the task"),
-    }
+    let id: u32 = Task::get_id(&args);
 
     match args.get(2) {
         Some(arg) => {
@@ -85,14 +78,7 @@ pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
         panic!("Error: Extra arguments for mark_in_progress command");
     }
 
-    let id: u32;
-    match args.get(1) {
-        Some(arg) => match arg.parse() {
-            Ok(n) => id = n,
-            Err(_) => panic!("Error: The ID must be a number"),
-        },
-        None => panic!("Error: You need to add the ID of the task"),
-    }
+    let id: u32 = Task::get_id(&args);
 
     let mut updated: bool = false;
     for task in tasks.iter_mut() {
