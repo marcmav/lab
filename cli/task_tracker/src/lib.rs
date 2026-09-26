@@ -38,10 +38,6 @@ impl Task {
         println!("description: {}\n", self.description);
     }
 
-    pub fn update_description(&mut self, new_description: String) {
-        self.description = new_description;
-    }
-
     pub fn filter_display(tasks: &Vec<Self>, status: Status) {
         for task in tasks.iter() {
             if task.status == status {

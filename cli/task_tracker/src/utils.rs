@@ -24,6 +24,7 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 3 {
         panic!("Error: Extra arguments for update command");
     }
+
     let id: u32;
     match args.get(1) {
         Some(arg) => match arg.parse() {
@@ -32,12 +33,13 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
         },
         None => panic!("Error: You need to add the ID of the task"),
     }
+
     match args.get(2) {
         Some(arg) => {
             let mut updated: bool = false;
             for task in tasks.iter_mut() {
                 if task.id == id {
-                    task.update_description(arg.to_string());
+                    task.description = arg.to_string();
                     updated = true;
                     break;
                 }
@@ -52,8 +54,9 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
 
 pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
-        panic!("Error: Extra arguments for delete commands");
+        panic!("Error: Extra arguments for delete command");
     }
+
     let mut idx: usize = 0;
     match args.get(1) {
         Some(arg) => match arg.parse::<u32>() {
@@ -75,6 +78,37 @@ pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
         None => panic!("Error: You need to a add the ID of the task to delete"),
     }
     tasks.remove(idx);
+}
+
+pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
+    if args.len() > 2 {
+        panic!("Error: Extra arguments for mark_in_progress command");
+    }
+
+    let id: u32;
+    match args.get(1) {
+        Some(arg) => match arg.parse() {
+            Ok(n) => id = n,
+            Err(_) => panic!("Error: The ID must be a number"),
+        },
+        None => panic!("Error: You need to add the ID of the task"),
+    }
+
+    let mut updated: bool = false;
+    for task in tasks.iter_mut() {
+        if task.id == id {
+            if args[0].as_str() == "mark-in-progress" {
+                task.status = Status::InProgress;
+            } else {
+                task.status = Status::Done;
+            }
+            updated = true;
+            break;
+        }
+    }
+    if !updated {
+        panic!("Error: Unknown ID");
+    }
 }
 
 pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
