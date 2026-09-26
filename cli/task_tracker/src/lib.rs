@@ -2,7 +2,8 @@ use serde::{Serialize, Deserialize};
 
 pub mod utils;
 
-#[derive(Serialize, Deserialize, PartialEq)]
+// TODO add display trait on Status
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum Status {
     Todo,
     InProgress,
@@ -12,8 +13,8 @@ pub enum Status {
 #[derive(Serialize, Deserialize)]
 pub struct Task {
     id: u32,
-    pub description: String,
     pub status: Status,
+    pub description: String,
     created_at: [u8; 3],
     updated_at: [u8; 3],
 }
@@ -31,8 +32,10 @@ impl Task {
     }
 
     pub fn display(&self) {
-        // TODO must display all other attributes
-        println!("{}:\n {}\n", self.id, self.description)
+        // TODO must display created and updated at
+        println!("id {}", self.id);
+        println!("status: {:?}", self.status); // TODO must display with no Debug
+        println!("description: {}\n", self.description);
     }
 
     pub fn update_description(&mut self, new_description: String) {

@@ -12,8 +12,8 @@ fn main() {
             "add" => add(args, &mut tasks),
             "list" => list(args, &tasks),
             "update" => update(args, &mut tasks),
+            "delete" => delete(args, &mut tasks),
             /*
-            "delete" => delete_task(),
             "mark-in-progress" => mark_in_progress(),
             "mark-done" => mark_done(),
             */
