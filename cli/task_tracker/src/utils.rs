@@ -13,8 +13,7 @@ pub fn add(args: Vec<String>, f: File) {
         Some(arg) => {
             let reader = BufReader::new(&f);
             for (i, line) in reader.lines().enumerate() {
-                if i % 4 == 0 { // it will work as long as a stupid bro doesnt create a description
-                                // with more than one line
+                if i % 4 == 0 {
                     id = Task::parse_id(line.expect("Error: Can't read line"));
                 }
             }
