@@ -1,26 +1,25 @@
 use std::env;
-use std::io{self, BufReader, BufWriter};
+use std::io::{self, BufReader, BufWriter};
 use std::fs::{OpenOptions};
 use task_tracker::*;
 use utils::*;
 
 fn main() -> io::Result<()> {
-    let args: Vec<String> = env::args().skip(1).collect();
+    let args: Vec<String> = env::args()
+        .skip(1)
+        .collect();
 
-    let mut f = OpenOptions::new()
+    let f = OpenOptions::new() // not mutable because all commands will take full ownership
         .read(true)
         .append(true)
         .create(true)
         .open("TODO")?;
 
-    let mut reader = BufReader::new(f);
-    let mut writer = BufWriter::new(f);
-
     let mut tasks: Vec<Task> = Vec::new();
 
     match args.get(0) {
         Some(arg) => match arg.as_str() {
-            "add" => add(args, &mut tasks),
+            "add" => add(args, f),
             "update" => update(args, &mut tasks),
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
@@ -29,4 +28,6 @@ fn main() -> io::Result<()> {
         },
         None => synopsis(),
     }
+
+    Ok(())
 }

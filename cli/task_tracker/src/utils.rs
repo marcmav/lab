@@ -1,7 +1,9 @@
+use std::io::{BufReader, BufRead, BufWriter, Write};
+use std::fs::File;
 use super::Task;
 use super::Status;
 
-pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
+pub fn add(args: Vec<String>, f: File) {
     if args.len() > 2 {
         panic!("Error: Extra arguments for add command");
     }
@@ -9,15 +11,25 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     let mut id: u32 = 0;
     match args.get(1) {
         Some(arg) => {
-            for (i, _) in tasks.iter().enumerate() {
-                id = i as u32;
+            let reader = BufReader::new(&f);
+            for (i, line) in reader.lines().enumerate() {
+                if i % 4 == 0 { // it will work as long as a stupid bro doesnt create a description
+                                // with more than one line
+                    id = Task::parse_id(line.expect("Error: Can't read line"));
+                }
             }
-            tasks.push(Task::new(id + 1, arg.to_string(), Status::Todo));
+
+            let task = Task::new(id + 1, arg.to_string(), Status::Todo);
+            {
+                let mut writer = BufWriter::new(&f);
+                let task = format!("ID: {}\nStatus: {:?}\nDescription: {}\n\n", task.id, task.status, task.description);
+                writer.write(task.as_bytes()).expect("Error: Can't add task");
+            }
         }
         None => panic!("Error: You need to add a description for the task"),
     }
 
-    println!("Task added succesfully (ID: {id})");
+    println!("Task added succesfully (ID: {})", id + 1);
 }
 
 pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {

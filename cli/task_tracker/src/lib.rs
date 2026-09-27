@@ -55,4 +55,13 @@ impl Task {
             None => panic!("Error: You need to add the ID of the task"),
         }
     }
+
+    pub fn parse_id(line: String) -> u32 {
+        line
+            .chars()
+            .skip(4)
+            .collect::<String>()
+            .parse::<u32>()
+            .unwrap()
+    }
 }
