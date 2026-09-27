@@ -14,7 +14,7 @@ pub fn add(args: Vec<String>, f: File) {
             let reader = BufReader::new(&f);
             for (i, line) in reader.lines().enumerate() {
                 if i % 4 == 0 {
-                    id = Task::parse_id(line.expect("Error: Can't read line"));
+                    id = Task::extract_id(line.expect("Error: Can't read line"));
                 }
             }
 
@@ -108,19 +108,24 @@ pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
     }
 }
 
-pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
+pub fn list(args: Vec<String>, f: File) {
+    let reader = BufReader::new(&f);
+
     match args.get(1) {
         Some(arg) => {
             match arg.as_str() {
+                /*
                 "todo" => Task::filter_display(tasks, Status::Todo),
                 "in-progress" => Task::filter_display(tasks, Status::InProgress),
                 "done" => Task::filter_display(tasks, Status::Done),
+                */
                 _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
             }
         }
         None => {
-            for task in tasks.iter() {
-                task.display();
+            for line in reader.lines() {
+                let line = line.expect("Error: Can't read line");
+                println!("{line}");
             }
         },
     }

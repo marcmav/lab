@@ -56,7 +56,7 @@ impl Task {
         }
     }
 
-    pub fn parse_id(line: String) -> u32 {
+    pub fn extract_id(line: String) -> u32 {
         line
             .chars()
             .skip(4)

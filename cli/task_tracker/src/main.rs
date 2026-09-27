@@ -9,7 +9,7 @@ fn main() -> io::Result<()> {
         .skip(1)
         .collect();
 
-    let f = OpenOptions::new() // not mutable because all commands will take full ownership
+    let f = OpenOptions::new()
         .read(true)
         .append(true)
         .create(true)
@@ -23,7 +23,7 @@ fn main() -> io::Result<()> {
             "update" => update(args, &mut tasks),
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
-            "list" => list(args, &tasks),
+            "list" => list(args, f),
             _ => synopsis(),
         },
         None => synopsis(),
