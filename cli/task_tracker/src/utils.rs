@@ -114,20 +114,13 @@ pub fn list(args: Vec<String>, f: File) {
     match args.get(1) {
         Some(arg) => {
             match arg.as_str() {
-                /*
-                "todo" => Task::filter_display(tasks, Status::Todo),
-                "in-progress" => Task::filter_display(tasks, Status::InProgress),
-                "done" => Task::filter_display(tasks, Status::Done),
-                */
+                "todo" => Task::list(reader, Status::Todo),
+                "in-progress" => Task::list(reader, Status::InProgress),
+                "done" => Task::list(reader, Status::Done),
                 _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
             }
         }
-        None => {
-            for line in reader.lines() {
-                let line = line.expect("Error: Can't read line");
-                println!("{line}");
-            }
-        },
+        None => Task::list(reader, Status::Todo),
     }
 }
 
