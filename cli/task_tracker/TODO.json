@@ -2,8 +2,8 @@
   "tasks": [
     {
       "id": 1,
-      "status": "Todo",
-      "description": "get rich as fuck",
+      "status": "InProgress",
+      "description": "setup arch linuxclear",
       "created_at": [
         0,
         0,
@@ -347,21 +347,6 @@
     },
     {
       "id": 24,
-      "status": "Todo",
-      "description": "setup arch linuxclear",
-      "created_at": [
-        0,
-        0,
-        0
-      ],
-      "updated_at": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "id": 25,
       "status": "Todo",
       "description": "setup arch linuxclear",
       "created_at": [

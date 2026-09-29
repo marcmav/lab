@@ -47,38 +47,34 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     println!("Task updated succesfully (ID: {})", id);
 }
 
-/*
 pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
         panic!("Error: Extra arguments for delete command");
     }
 
+    let id: u32 = Task::get_id(&args);
+
     let mut idx: usize = 0;
-    match args.get(1) {
-        Some(arg) => match arg.parse::<u32>() {
-            Ok(n) => {
-                let mut indexed: bool = false;
-                for (i, task) in tasks.iter().enumerate() {
-                    if task.id == n {
-                        idx = i;
-                        indexed = true;
-                        break;
-                    }
-                }
-                if !indexed {
-                    panic!("Error: Unknown iD")
-                }
-            },
-            Err(_) => panic!("Error: Error: The ID must be a number"),
+    let mut indexed: bool = false;
+    for (i, task) in tasks.iter().enumerate() {
+        if task.id == id {
+            idx = i;
+            indexed = true;
+            break;
         }
-        None => panic!("Error: You need to a add the ID of the task to delete"),
     }
+    if !indexed {
+        panic!("Error: Unknown iD")
+    }
+
     tasks.remove(idx);
+    Task::assign_id(tasks);
+    println!("Task deleted succesfully (ID: {})", id);
 }
 
 pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
-        panic!("Error: Extra arguments for mark_in_progress command");
+        panic!("Error: Extra arguments for mark command");
     }
 
     let id: u32 = Task::get_id(&args);
@@ -98,6 +94,8 @@ pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
     if !updated {
         panic!("Error: Unknown ID");
     }
+
+    println!("Task updated succesfully (ID: {})", id);
 }
 
 pub fn list(args: Vec<String>, f: File) {
@@ -115,7 +113,6 @@ pub fn list(args: Vec<String>, f: File) {
         None => Task::list(reader, Status::Todo),
     }
 }
-*/
 
 pub fn synopsis() {
     println!("\n\ntask_tracker (command) [id] [text]");

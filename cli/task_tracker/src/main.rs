@@ -29,11 +29,9 @@ fn main() -> io::Result<()> {
         Some(arg) => match arg.as_str() {
             "add" => add(args, &mut tasks),
             "update" => update(args, &mut tasks),
-            /*
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
-            "list" => list(args, f),
-            */
+            "list" => list(args, &mut tasks),
             _ => panic!("Error: No input was found"),
         },
         None => panic!("Error: No input was found"),
