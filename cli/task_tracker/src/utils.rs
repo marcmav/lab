@@ -98,19 +98,21 @@ pub fn mark(args: Vec<String>, tasks: &mut Vec<Task>) {
     println!("Task updated succesfully (ID: {})", id);
 }
 
-pub fn list(args: Vec<String>, f: File) {
-    let reader = BufReader::new(&f);
+pub fn list(args: Vec<String>, tasks: &Vec<Task>) {
+    if args.len() > 2 {
+        panic!("Error: Extra arguments for list command");
+    }
 
     match args.get(1) {
         Some(arg) => {
             match arg.as_str() {
-                "todo" => Task::list(reader, Status::Todo),
-                "in-progress" => Task::list(reader, Status::InProgress),
-                "done" => Task::list(reader, Status::Done),
-                _ => panic!("Error: Invalid task status\nValids: <done> <todo> <in-progress>"),
+                "todo" => Task::list(&tasks, Status::Todo),
+                "in-progress" => Task::list(&tasks, Status::InProgress),
+                "done" => Task::list(&tasks, Status::Done),
+                _ => panic!("Error: Invalid task status"),
             }
         }
-        None => Task::list(reader, Status::Todo),
+        None => Task::list(&tasks, Status::Todo),
     }
 }
 

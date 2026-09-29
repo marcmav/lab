@@ -31,7 +31,7 @@ fn main() -> io::Result<()> {
             "update" => update(args, &mut tasks),
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
-            "list" => list(args, &mut tasks),
+            "list" => list(args, &tasks),
             _ => panic!("Error: No input was found"),
         },
         None => panic!("Error: No input was found"),

@@ -52,7 +52,6 @@ impl Task {
         }
     }
 
-    /*
     pub fn display(&self) {
         // TODO must display created and updated at
         println!("id {}", self.id);
@@ -60,39 +59,11 @@ impl Task {
         println!("description: {}\n", self.description);
     }
 
-    pub fn extract_id(line: String) -> u32 {
-        line
-            .chars()
-            .skip(4)
-            .collect::<String>()
-            .parse::<u32>()
-            .unwrap()
-    }
- 
-    // TODO should return &str instead (must learn lifetime)
-    pub fn status_to_string(status: Status) -> String {
-        let status = match status {
-            Status::Todo => "Todo",
-            Status::InProgress => "InProgress",
-            Status::Done => "Done",
-        };
-        status.to_string()
-    }
-
-    pub fn list(f_reader: BufReader<&File>, status: Status) {
-        let f_reader: Vec<String> = f_reader.lines()
-            .map(|line| line.expect("Error: Can't read line"))
-            .collect();
-
-        let status = Self::status_to_string(status);
-
-        for lines in f_reader.chunks(4) {
-            if lines[1].contains(status.as_str()) {
-                for line in lines {
-                    println!("{line}");
-                }
+    pub fn list(tasks: &Vec<Task>, status: Status) {
+        for task in tasks.iter() {
+            if task.status == status {
+                task.display()
             }
         }
     }
-    */
 }
