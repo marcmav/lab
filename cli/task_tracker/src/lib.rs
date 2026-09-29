@@ -1,7 +1,5 @@
 use serde::{Serialize, Deserialize};
 
-pub mod utils;
-
 // TODO add display trait on Status
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum Status {
@@ -67,3 +65,5 @@ impl Task {
         }
     }
 }
+
+pub mod utils;
