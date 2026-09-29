@@ -39,6 +39,11 @@ fn main() -> io::Result<()> {
         None => panic!("Error: No input was found"),
     }
 
+    let mut f = OpenOptions::new()
+        .write(true)
+        .truncate(true)
+        .open("TODO.json")?;
+
     let tasks = TaskList { tasks: tasks, };
     f.write(serde_json::to_string_pretty(&tasks)?.as_bytes())?;
 

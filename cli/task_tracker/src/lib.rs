@@ -42,14 +42,6 @@ impl Task {
         }
     }
 
-    /*
-    pub fn display(&self) {
-        // TODO must display created and updated at
-        println!("id {}", self.id);
-        println!("status: {:?}", self.status); // TODO must display with no Debug
-        println!("description: {}\n", self.description);
-    }
-
     pub fn get_id(args: &Vec<String>) -> u32 {
         match args.get(1) {
             Some(arg) => match arg.parse::<u32>() {
@@ -58,6 +50,14 @@ impl Task {
             },
             None => panic!("Error: You need to add the ID of the task"),
         }
+    }
+
+    /*
+    pub fn display(&self) {
+        // TODO must display created and updated at
+        println!("id {}", self.id);
+        println!("status: {:?}", self.status); // TODO must display with no Debug
+        println!("description: {}\n", self.description);
     }
 
     pub fn extract_id(line: String) -> u32 {

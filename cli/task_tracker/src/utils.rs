@@ -1,6 +1,5 @@
 use super::{Task, Status};
 
-// TODO i can sort by id so it always get organized or better just swap by its index + 1
 pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
         panic!("Error: Extra arguments for add command");
@@ -8,13 +7,15 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
 
     match args.get(1) {
         Some(arg) => {
-            let task = Task::new(0, arg.to_string(), Status::Todo);
+            let task: Task;
+            match tasks.last() {
+                Some(last_task) => task = Task::new(last_task.id + 1, arg.to_string(), Status::Todo),
+                None => task = Task::new(1, arg.to_string(), Status::Todo),
+            }
             tasks.push(task);
         }
         None => panic!("Error: You need to add a description for the task"),
     }
-
-    Task::assign_id(tasks);
 
     println!("Task added succesfully (ID: {})", tasks.last().unwrap().id);
 }
@@ -43,6 +44,8 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
         },
         None => panic!("Error: You need to add a new description of the task"),
     }
+
+    println!("Task updated succesfully (ID: {})", id);
 }
 
 pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
