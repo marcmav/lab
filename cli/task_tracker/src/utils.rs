@@ -1,36 +1,25 @@
-use std::io::{BufReader, BufRead, BufWriter, Write};
-use std::fs::File;
-use super::Task;
-use super::Status;
+use super::{Task, Status};
 
-pub fn add(args: Vec<String>, f: File) {
+// TODO i can sort by id so it always get organized or better just swap by its index + 1
+pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
         panic!("Error: Extra arguments for add command");
     }
 
-    let mut id: u32 = 0;
     match args.get(1) {
         Some(arg) => {
-            let reader = BufReader::new(&f);
-            for (i, line) in reader.lines().enumerate() {
-                if i % 4 == 0 {
-                    id = Task::extract_id(line.expect("Error: Can't read line"));
-                }
-            }
-
-            let task = Task::new(id + 1, arg.to_string(), Status::Todo);
-            {
-                let mut writer = BufWriter::new(&f);
-                let task = format!("ID: {}\nStatus: {:?}\nDescription: {}\n\n", task.id, task.status, task.description);
-                writer.write(task.as_bytes()).expect("Error: Can't add task");
-            }
+            let task = Task::new(0, arg.to_string(), Status::Todo);
+            tasks.push(task);
         }
         None => panic!("Error: You need to add a description for the task"),
     }
 
-    println!("Task added succesfully (ID: {})", id + 1);
+    Task::assign_id(tasks);
+
+    println!("Task added succesfully (ID: {})", tasks.last().unwrap().id);
 }
 
+/*
 pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 3 {
         panic!("Error: Extra arguments for update command");
@@ -123,6 +112,7 @@ pub fn list(args: Vec<String>, f: File) {
         None => Task::list(reader, Status::Todo),
     }
 }
+*/
 
 pub fn synopsis() {
     println!("\n\ntask_tracker (command) [id] [text]");

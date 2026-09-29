@@ -1,5 +1,5 @@
 use std::env;
-use std::io::{self};
+use std::io::{self, Write, Read};
 use std::fs::{OpenOptions};
 use task_tracker::*;
 use utils::*;
@@ -9,25 +9,38 @@ fn main() -> io::Result<()> {
         .skip(1)
         .collect();
 
-    let f = OpenOptions::new()
+    let mut f = OpenOptions::new()
         .read(true)
-        .append(true)
+        .write(true)
         .create(true)
-        .open("TODO")?;
+        .open("TODO.json")?;
 
-    let mut tasks: Vec<Task> = Vec::new();
+    let mut content = String::new();
+    f.read_to_string(&mut content)?;
+
+    let mut tasks: Vec<Task>;
+    if content.is_empty() {
+        tasks = Vec::new();
+    } else {
+        tasks = serde_json::from_str::<TaskList>(&content)?.tasks;
+    }
 
     match args.get(0) {
         Some(arg) => match arg.as_str() {
-            "add" => add(args, f),
+            "add" => add(args, &mut tasks),
+            /*
             "update" => update(args, &mut tasks),
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
             "list" => list(args, f),
-            _ => synopsis(),
+            */
+            _ => panic!("Error: No input was found"),
         },
-        None => synopsis(),
+        None => panic!("Error: No input was found"),
     }
+
+    let tasks = TaskList { tasks: tasks, };
+    f.write(serde_json::to_string_pretty(&tasks)?.as_bytes())?;
 
     Ok(())
 }

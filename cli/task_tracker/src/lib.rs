@@ -1,5 +1,3 @@
-use std::io::{BufReader, BufRead};
-use std::fs::File;
 use serde::{Serialize, Deserialize};
 
 pub mod utils;
@@ -12,7 +10,7 @@ pub enum Status {
     Done,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Task {
     id: u32,
     pub status: Status,
@@ -21,8 +19,13 @@ pub struct Task {
     updated_at: [u8; 3],
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TaskList {
+    pub tasks: Vec<Task>,
+}
+
 impl Task {
-    /*need to add created and updated at*/
+    // TODO need to add created and updated at
     pub fn new(id: u32, description: String, status: Status) -> Self {
         Self {
             id,
@@ -33,6 +36,13 @@ impl Task {
         }
     }
 
+    pub fn assign_id(tasks: &mut Vec<Self>) {
+        for (i, task) in tasks.iter_mut().enumerate() {
+            task.id = i as u32 + 1;
+        }
+    }
+
+    /*
     pub fn display(&self) {
         // TODO must display created and updated at
         println!("id {}", self.id);
@@ -84,4 +94,5 @@ impl Task {
             }
         }
     }
+    */
 }
