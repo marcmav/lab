@@ -28,8 +28,8 @@ fn main() -> io::Result<()> {
     match args.get(0) {
         Some(arg) => match arg.as_str() {
             "add" => add(args, &mut tasks),
-            /*
             "update" => update(args, &mut tasks),
+            /*
             "delete" => delete(args, &mut tasks),
             "mark-in-progress" | "mark-done" => mark(args, &mut tasks),
             "list" => list(args, f),

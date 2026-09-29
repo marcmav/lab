@@ -20,7 +20,6 @@ pub fn add(args: Vec<String>, tasks: &mut Vec<Task>) {
     println!("Task added succesfully (ID: {})", tasks.last().unwrap().id);
 }
 
-/*
 pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 3 {
         panic!("Error: Extra arguments for update command");
@@ -42,12 +41,13 @@ pub fn update(args: Vec<String>, tasks: &mut Vec<Task>) {
                 panic!("Error: Unknown ID");
             }
         },
-        None => panic!("Error: You need to add a new description of the task"),
+        None => panic!("Error: You need to add a new description for the task"),
     }
 
     println!("Task updated succesfully (ID: {})", id);
 }
 
+/*
 pub fn delete(args: Vec<String>, tasks: &mut Vec<Task>) {
     if args.len() > 2 {
         panic!("Error: Extra arguments for delete command");
