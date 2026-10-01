@@ -13,8 +13,10 @@ pub struct Task {
     id: u32,
     pub status: Status,
     pub description: String,
-    created_at: [u8; 3],
-    updated_at: [u8; 3],
+    /*
+    created_at: Date,
+    updated_at: Date,
+    */
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -29,8 +31,10 @@ impl Task {
             id,
             description,
             status,
-            created_at: [0; 3],
-            updated_at: [0; 3],
+            /*
+            created_at: Date (0, 0, 0),
+            updated_at: Date (0, 0, 0),
+            */
         }
     }
 
