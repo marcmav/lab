@@ -1,3 +1,2 @@
-cli/*/target/
-cli/task_tracker/TODO.json
-
+rust/cli/*/target/
+rust/cli/task_tracker/TODO.json
