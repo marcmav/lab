@@ -14,15 +14,12 @@ fn main() -> io::Result<()> {
         .read(true)
         .open("Expenses.json")?;
 
-    let mut input: String = String::new();
-    f.read_to_string(&mut input)?;
+    let mut content = String::new();
+    f.read_to_string(&mut content)?;
 
-    let mut expenses: ExpenseList = ExpenseList { list: Vec::new(), };
-    match input.is_empty() {
-        true => (),
-        false => {
-            expenses = serde_json::from_str(input.as_str())?;
-        },
+    let mut expenses: ExpenseList = match content.is_empty() {
+        true => ExpenseList { list: Vec::new(), },
+        false => serde_json::from_str::<ExpenseList>(content.as_str())?,
     };
 
     match args.get(0) {
