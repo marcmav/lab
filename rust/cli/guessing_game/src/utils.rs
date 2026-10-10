@@ -53,7 +53,6 @@ pub fn get_user_input(buf: &mut String) -> u32 {
     }
 }
 
-#[allow(unused)]
 pub fn process_game(chances: u32, random_number: u32, input: &mut String, score: &mut Score) {
     let hint: String = match random_number {
         even if even % 2 == 0 => String::from("\nThe random number is an even number"),
