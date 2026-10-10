@@ -1,2 +1,3 @@
 rust/cli/*/target/
 rust/cli/task_tracker/TODO.json
+rust/cli/expense_tracker/Expense.json
