@@ -1,6 +1,6 @@
 use std::env;
 use std::fs::OpenOptions;
-use std::io::{self, Read};
+use std::io::{self, Read, Write};
 use expense_tracker::{*, utils::*};
 
 fn main() -> io::Result<()> {
@@ -17,25 +17,30 @@ fn main() -> io::Result<()> {
     let mut input: String = String::new();
     f.read_to_string(&mut input)?;
 
-    let mut expense: ExpenseList = ExpenseList { list: Vec::new(), };
+    let mut expenses: ExpenseList = ExpenseList { list: Vec::new(), };
     match input.is_empty() {
         true => (),
         false => {
-            expense = serde_json::from_str(input.as_str())?;
+            expenses = serde_json::from_str(input.as_str())?;
         },
     };
 
     match args.get(0) {
         Some(op) => match op.as_str() {
-            /*
-            "add" => add(args, &mut expense),
-            */
-            "delete" => delete(args, &mut expense),
-            "list" => expense.list(),
-            "summary" => expense.summary(),
+            "add" => add(args, &mut expenses),
+            "delete" => delete(args, &mut expenses),
+            "list" => expenses.list(),
+            "summary" => expenses.summary(),
             _ => return Ok(()),
         },
         None => return Ok(()),
     };
+
+    let mut f = OpenOptions::new()
+        .write(true)
+        .truncate(true)
+        .open("Expenses.json")?;
+
+    f.write(serde_json::to_string::<ExpenseList>(&expenses)?.as_bytes())?;
     Ok(())
 }

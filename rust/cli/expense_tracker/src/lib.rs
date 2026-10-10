@@ -32,7 +32,7 @@ impl ExpenseList {
         println!("Success: Expense Deleted - ID: {i}");
     }
 
-    pub fn list(self) {
+    pub fn list(&self) {
         println!("{:<7}{:^20}{:>10}", "ID", "Description", "Amount");
         self.list
             .iter()
@@ -40,12 +40,12 @@ impl ExpenseList {
                 println!("{:<7}{:^20}{:>10}", e.id, e.description, e.amount); });
     }
 
-    pub fn summary(self) {
+    pub fn summary(&self) {
         let sum: u32 = self.list
             .iter()
             .map(|e| e.amount)
             .sum();
-        println!("Total expenses: ${}", sum);
+        println!("Total expenses: {}kz", sum);
     }
 }
 
