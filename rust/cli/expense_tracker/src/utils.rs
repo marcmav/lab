@@ -26,8 +26,8 @@ pub fn add(args: Vec<String>, expenses: &mut ExpenseList) {
         None => return,
     };
     let id: u32 = (expenses.list.len() as u32) + 1;
-    expenses.list.push(Expense::new(id, description, amount));
-    println!("Success: Added a new expense - ID: {id}");
+
+    expenses.add(Expense::new(id, description, amount));
 }
 
 pub fn delete(args: Vec<String>, expenses: &mut ExpenseList) {

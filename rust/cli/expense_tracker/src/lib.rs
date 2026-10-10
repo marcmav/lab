@@ -23,6 +23,12 @@ impl Expense {
 }
 
 impl ExpenseList {
+    pub fn add(&mut self, expense: Expense) {
+        let id = expense.id;
+        self.list.push(expense);
+        println!("Success: Added a new expense - ID: {id}");
+    }
+
     pub fn delete(&mut self, id: u32) {
         let i: usize = self.list
             .iter()

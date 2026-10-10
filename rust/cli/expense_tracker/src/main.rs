@@ -25,6 +25,7 @@ fn main() -> io::Result<()> {
     match args.get(0) {
         Some(op) => match op.as_str() {
             "add" => add(args, &mut expenses),
+            // add update command
             "delete" => delete(args, &mut expenses),
             "list" => expenses.list(),
             "summary" => expenses.summary(),
