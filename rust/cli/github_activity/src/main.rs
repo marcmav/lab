@@ -1,4 +1,5 @@
 use std::env;
+use serde_json::Value;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args()
@@ -28,8 +29,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             return Ok(());
         },
     };
-    let content: serde_json::Value = response.json()?;
+    let events: serde_json::Value = response.json()?;
     println!("Output:");
+    for i in 0..10 {
+        if events[i]["type"].as_str() == Some("PushEvent") {
+            println!("Pushed 3 commits to {}", events[i]["repo"]["name"]);
+        }
+    }
 
 
     Ok(())
