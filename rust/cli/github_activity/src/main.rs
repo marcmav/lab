@@ -18,8 +18,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let response = client
         .get(url)
         .header("User-Agent", "marcmav")
+        .header("Accept", "application/vnd.github+json")
+        .header("X-GitHub-Api-Version", "2026-03-10")
         .send()?;
-    println!("Status {}", response.status());
+    let response = match response.error_for_status() {
+        Ok(updated) => updated,
+        Err(e) => {
+            println!("An Error occured: {}", e);
+            return Ok(());
+        },
+    };
+    let content: serde_json::Value = response.json()?;
+    println!("Output:");
+
 
     Ok(())
 }
