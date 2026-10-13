@@ -14,6 +14,7 @@ struct Actor {
 struct Repo {
     id: u32,
     name: String,
+    url: String,
 }
 
 #[derive(Deserialize)]
@@ -22,8 +23,8 @@ struct EventData {
     type_: String,
     actor: Actor,
     repo: Repo,
-    payload: 
     public: bool,
+    payload: 
     created_at: String,
 }
 
