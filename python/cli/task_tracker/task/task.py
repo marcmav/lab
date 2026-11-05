@@ -53,4 +53,7 @@ class TaskList():
         else:
             print(f"Task doesn't exist")
 
-    def list_task(self, )
+    def list_task(self, status: str) -> None:
+        for task in self.tasks:
+            if task.status == status:
+                print(task.description)
