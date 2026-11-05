@@ -32,6 +32,7 @@ class TaskList():
     def is_valid_id(id: int, tasks: list[task]) -> tuple[bool, int]:
             pass
 
+    # TODO - update functions that change id so that id will always be index + 1
     def add(self, description: str) -> None:
         id: int = self.get_missing_id(self.tasks)
         self.tasks.append(Task.new(id, description, "Todo"))
@@ -43,7 +44,7 @@ class TaskList():
             self.tasks.pop(result[1])
             print(f"Task deleted successfully (ID: {id})")
         else:
-            print(f"Task doesn't exist")
+            print(f"Task (ID: {id}) doesn't exist")
 
     def update(self, id: int, description: str) -> None:
         result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
@@ -51,7 +52,15 @@ class TaskList():
             self.tasks[result[1]].description = description
             print(f"Task updated successfully (ID: {id})")
         else:
-            print(f"Task doesn't exist")
+            print(f"Task (ID: {id}) doesn't exist")
+
+    def mark(self, id: int, status: str) -> None:
+        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
+        if result[0]:
+            self.tasks[result[1]].status = status
+            print(f"Task updated successfully (ID: {id})")
+        else:
+            print(f"Task (ID: {id}) doesn't exist")
 
     def list_task(self, status: str) -> None:
         for task in self.tasks:
