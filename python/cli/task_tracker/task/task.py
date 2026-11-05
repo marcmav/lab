@@ -27,9 +27,30 @@ class TaskList():
             return highest + 1
         return list(all)[0]
 
+    @staticmethod
+    # TODO
+    def is_valid_id(id: int, tasks: list[task]) -> tuple[bool, int]:
+            pass
 
     def add(self, description: str) -> None:
         id: int = self.get_missing_id(self.tasks)
         self.tasks.append(Task.new(id, description, "Todo"))
+        print(f"Task added successfully (ID: {id})")
 
+    def delete(self, id: int) -> None:
+        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
+        if result[0]:
+            self.tasks.pop(result[1])
+            print(f"Task deleted successfully (ID: {id})")
+        else:
+            print(f"Task doesn't exist")
 
+    def update(self, id: int, description: str) -> None:
+        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
+        if result[0]:
+            self.tasks[result[1]].description = description
+            print(f"Task updated successfully (ID: {id})")
+        else:
+            print(f"Task doesn't exist")
+
+    def list_task(self, )
