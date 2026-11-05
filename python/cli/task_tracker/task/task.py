@@ -34,7 +34,7 @@ class TaskList():
 
     # TODO - update functions that change id so that id will always be index + 1
     def add(self, description: str) -> None:
-        id: int = self.get_missing_id(self.tasks)
+        id: int = len(self.tasks) + 1
         self.tasks.append(Task.new(id, description, "Todo"))
         print(f"Task added successfully (ID: {id})")
 
@@ -45,6 +45,14 @@ class TaskList():
             print(f"Task deleted successfully (ID: {id})")
         else:
             print(f"Task (ID: {id}) doesn't exist")
+        size: int = len(self.tasks)
+        if size == 0:
+            print(f"Task (ID: {id}) doesn't exist")
+        elif size == 1:
+            self.tasks.pop()
+        else:
+
+
 
     def update(self, id: int, description: str) -> None:
         result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
