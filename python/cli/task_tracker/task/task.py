@@ -13,26 +13,6 @@ class TaskList():
     def __init__(self) -> None:
         self.tasks: list[Task] = []
 
-    @staticmethod
-    def get_missing_id(tasks: list[Task]) -> int:
-        highest: int = 0
-        exists: set[int] = set([task.id for task in tasks])
-        for task in tasks:
-            if task.id > highest:
-                highest = task.id
-        all: set[int] = set(range(1, highest))
-        missing: int = 0
-        all -= exists
-        if len(all) == 0:
-            return highest + 1
-        return list(all)[0]
-
-    @staticmethod
-    # TODO
-    def is_valid_id(id: int, tasks: list[task]) -> tuple[bool, int]:
-            pass
-
-    # TODO - update functions that change id so that id will always be index + 1
     def add(self, description: str) -> None:
         id: int = len(self.tasks) + 1
         self.tasks.append(Task.new(id, description, "Todo"))
@@ -55,7 +35,6 @@ class TaskList():
             print(f"Task updated successfully (ID: {id})")
         else:
             print(f"Task (ID: {id}) doesn't exist")
-
 
     def mark(self, id: int, status: str) -> None:
         if len(self.tasks) > id:
