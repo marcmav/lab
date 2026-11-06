@@ -39,33 +39,27 @@ class TaskList():
         print(f"Task added successfully (ID: {id})")
 
     def delete(self, id: int) -> None:
-        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
-        if result[0]:
-            self.tasks.pop(result[1])
-            print(f"Task deleted successfully (ID: {id})")
-        else:
-            print(f"Task (ID: {id}) doesn't exist")
         size: int = len(self.tasks)
         if size == 0:
             print(f"Task (ID: {id}) doesn't exist")
-        elif size == 1:
-            self.tasks.pop()
-        else:
-
-
+            return
+        elif size > 1:
+            self.tasks[id - 1].description = self.tasks[-1].description
+            self.tasks[id - 1].status = self.tasks[-1].status
+        self.tasks.pop()
+        print(f"Task deleted successfully (ID: {id})")
 
     def update(self, id: int, description: str) -> None:
-        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
-        if result[0]:
-            self.tasks[result[1]].description = description
+        if len(self.tasks) > id:
+            self.tasks[id - 1].description = description
             print(f"Task updated successfully (ID: {id})")
         else:
             print(f"Task (ID: {id}) doesn't exist")
 
+
     def mark(self, id: int, status: str) -> None:
-        result: tuple[bool, int] = self.is_valid_id(id, self.tasks)
-        if result[0]:
-            self.tasks[result[1]].status = status
+        if len(self.tasks) > id:
+            self.tasks[id - 1].status = status
             print(f"Task updated successfully (ID: {id})")
         else:
             print(f"Task (ID: {id}) doesn't exist")
