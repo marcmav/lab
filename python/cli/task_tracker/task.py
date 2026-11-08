@@ -2,12 +2,12 @@ Task = dict[str, str]
 
 
 def new_task(id: str, description: str, status: str) -> Task:
-    return {"id": str, "description": description, "status": status}
+    return {"id": id, "description": description, "status": status}
 
 
 def add_task(tasks: list[Task], description: str) -> None:
     id: str = str(len(tasks) + 1)
-    tasks.append(new_task(id, description, "Todo"))
+    tasks.append(new_task(id, description, "todo"))
     print(f"Task added successfully (ID: {id})")
 
 
