@@ -1,44 +1,43 @@
 Task = dict[str, str]
 
 
-def new_task(id: str, description: str, status: str) -> Task:
-    return {"id": id, "description": description, "status": status}
+class Task():
+    def __init__(self) -> None:
+        self.tasks: list[dict[str, str]] = []
 
+    def new(id: str, description: str, status: str) -> dict[str, str]:
+        return {"id": id, "description": description, "status": status}
 
-def add_task(tasks: list[Task], description: str) -> None:
-    id: str = str(len(tasks) + 1)
-    tasks.append(new_task(id, description, "todo"))
-    print(f"Task added successfully (ID: {id})")
+    def add(self, description: str) -> None:
+        id: str = str(len(self.tasks) + 1)
+        self.tasks.append(new_task(id, description, "todo"))
+        print(f"Task added successfully (ID: {id})")
 
+    def delete(self, id: str) -> None:
+        size: int = len(self.tasks)
+        if size >= int(id):
+            self.tasks[int(id) - 1]["description"] = self.tasks[-1]["description"]
+            self.tasks[int(id) - 1]["status"] = self.tasks[-1]["status"]
+            self.tasks.pop()
+            print(f"Task deleted successfully (ID: {id})")
+        else:
+            print(f"Task (ID: {id}) doesn't exist")
 
-def delete_task(tasks: list[Task], id: str) -> None:
-    size: int = len(tasks)
-    if size >= int(id):
-        tasks[int(id) - 1]["description"] = tasks[-1]["description"]
-        tasks[int(id) - 1]["status"] = tasks[-1]["status"]
-        tasks.pop()
-        print(f"Task deleted successfully (ID: {id})")
-    else:
-        print(f"Task (ID: {id}) doesn't exist")
+    def update(self, id: str, description: str) -> None:
+        if len(self.tasks) >= int(id):
+            self.tasks[int(id) - 1]["description"] = description
+            print(f"Task updated successfully (ID: {id})")
+        else:
+            print(f"Task (ID: {id}) doesn't exist")
 
+    def mark(self, id: str, status: str) -> None:
+        if len(self.tasks) >= int(id):
+            self.tasks[int(id) - 1]["status"] = status
+            print(f"Task updated successfully (ID: {id})")
+        else:
+            print(f"Task (ID: {id}) doesn't exist")
 
-def update_task(tasks: list[Task], id: str, description: str) -> None:
-    if len(tasks) >= int(id):
-        tasks[int(id) - 1]["description"] = description
-        print(f"Task updated successfully (ID: {id})")
-    else:
-        print(f"Task (ID: {id}) doesn't exist")
-
-
-def mark_task(tasks: list[Task], id: str, status: str) -> None:
-    if len(tasks) >= int(id):
-        tasks[int(id) - 1]["status"] = status
-        print(f"Task updated successfully (ID: {id})")
-    else:
-        print(f"Task (ID: {id}) doesn't exist")
-
-
-def list_task(tasks: list[Task], status: str) -> None:
-    for task in tasks:
-        if task["status"] == status:
-            print(task["description"])
+    def list_task(self, status: str | None = None) -> None:
+        for task in self.tasks:
+            if task["status"] == status or not status:
+                print(task["description"])
