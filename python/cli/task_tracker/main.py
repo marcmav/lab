@@ -53,7 +53,6 @@ def main() -> None:
         else:
             print(f"Usage: {p_name} list [status]")
 
-
     json.dump(tasks, open("TODO.json", "w"))
 
 
