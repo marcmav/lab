@@ -1,6 +1,7 @@
 import sys
 import json
-from parser import parse
+import serde
+#from parser import parse
 
 
 def main() -> None:
@@ -10,13 +11,13 @@ def main() -> None:
         return
 
     try:
-        tasks: list[Task] = json.load(open("TODO.json", "r"))
+        tasks: list[Task] = json.load(open("TODO.json", "r"), object_hook=serde.decode)
     except ValueError:
         tasks: list[Task] = []
 
-    parse(tasks, args)
+    #parse(tasks, args)
 
-    json.dump(tasks, open("TODO.json", "w"))
+    json.dump(tasks, open("TODO.json", "w"), default=serde.encode)
 
 
 if __name__ == "__main__":
