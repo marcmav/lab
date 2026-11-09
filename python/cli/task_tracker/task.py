@@ -2,12 +2,12 @@ class Task():
     def __init__(self) -> None:
         self.tasks: list[dict[str, str]] = []
 
-    def new(id: str, description: str, status: str) -> dict[str, str]:
+    def new(self, id: str, description: str, status: str) -> dict[str, str]:
         return {"id": id, "description": description, "status": status}
 
     def add(self, description: str) -> None:
         id: str = str(len(self.tasks) + 1)
-        self.tasks.append(new_task(id, description, "todo"))
+        self.tasks.append(self.new(id, description, "todo"))
         print(f"Task added successfully (ID: {id})")
 
     def delete(self, id: str) -> None:

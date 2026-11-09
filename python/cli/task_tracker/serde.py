@@ -8,8 +8,7 @@ def encode(obj: object) -> object:
 
 
 def decode(tasks: list[dict[str, str]]) -> task.Task:
-    for task in tasks:
-        if "id" in task:
-            obj: task.Task = task.Task()
-            obj.tasks = tasks
+    if "id" in [i for i in tasks]:
+        obj: task.Task = task.Task()
+        obj.tasks = tasks
     return obj
