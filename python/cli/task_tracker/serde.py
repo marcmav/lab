@@ -5,10 +5,3 @@ def encode(obj: object) -> object:
     if isinstance(obj, task.Task):
         return obj.tasks
     raise TypeError(f"Cannot serialize {type(obj).__name__}")
-
-
-def decode(tasks: list[dict[str, str]]) -> task.Task:
-    if "id" in [i for i in tasks]:
-        obj: task.Task = task.Task()
-        obj.tasks = tasks
-    return obj
