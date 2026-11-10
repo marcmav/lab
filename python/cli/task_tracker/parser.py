@@ -15,17 +15,20 @@ def parse(tasks: Task, args: list[str]):
         else:
             print(f"Usage: {args[0]} update [id] [description]")
 
+
     elif args[1] == "delete":
         if len(args) == 3:
             tasks.delete(args[2])
         else:
             print(f"Usage: {args[0]} delete [id]")
 
+
     elif args[1] in ("mark-in-progress", "mark-done"):
         if len(args) == 3:
             tasks.mark(args[2], args[1])
         else:
             print(f"Usage: {args[0]} [mark-in-progress | mark-done]")
+
 
     elif args[1] == "list":
         if len(args) == 2:
