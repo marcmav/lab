@@ -37,4 +37,4 @@ class Task():
     def list_task(self, status: str | None = None) -> None:
         for task in self.tasks:
             if task["status"] == status or not status:
-                print(task["description"])
+                print(task)

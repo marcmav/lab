@@ -2,7 +2,7 @@ import sys
 import json
 import serde
 import task
-#from parser import parse
+import parser
 
 
 def main() -> None:
@@ -20,12 +20,7 @@ def main() -> None:
     else:
         tasks.tasks = saved
 
-    print(tasks.tasks)
-    if args[1] == "add":
-        if len(args) == 3:
-            tasks.add(args[2])
-        else:
-            print(f"Usage: {args[0]} add [description]")
+    parser.parse(tasks, args)
 
     with open("TODO.json", "w") as f:
         json.dump(tasks, f, default=serde.encode, indent=4)
