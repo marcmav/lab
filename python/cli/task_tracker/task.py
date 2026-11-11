@@ -38,3 +38,4 @@ class Task():
         for task in self.tasks:
             if task["status"] == status or not status:
                 print(task)
+
