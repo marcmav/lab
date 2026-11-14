@@ -38,5 +38,3 @@ def parse(tasks: Task, args: list[str]):
                 list_task(tasks, args[2])
         else:
             print(f"Usage: {args[0]} list [status]")
-
-
