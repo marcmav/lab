@@ -5,7 +5,18 @@ import json
 app = FastAPI()
 
 
-@app.post("users/{user_name}")
+@app.get("/users")
+def fetch_users() -> list[str]:
+    users: list[str] = []
+    try:
+        with open("users.json", "r") as f:
+            users = load(f)
+    except Exception:
+        pass
+    return users
+
+
+@app.post("/users/{user_name}")
 def create_user(user_name: str) -> list[str]:
     users: list[str] = []
     try:
@@ -14,7 +25,6 @@ def create_user(user_name: str) -> list[str]:
     except Exception:
         pass
     users.append(user_name)
-    print(users) # TEST
     try:
         with open("users.json", "w") as f:
             json.dump(users, f)
