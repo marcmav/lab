@@ -4,3 +4,4 @@ rust/cli/expense_tracker/Expense.json
 python/cli/*/__pycache__
 python/cli/*/.venv
 python/cli/task_tracker/TODO.json
+python/cli/expense_api/*.json
