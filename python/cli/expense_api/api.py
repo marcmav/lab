@@ -31,4 +31,3 @@ def create_user(user_name: str) -> list[str]:
     except Exception:
         pass
     return users
-
